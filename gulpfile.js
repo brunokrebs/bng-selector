@@ -1,15 +1,22 @@
 var gulp = require('gulp');
+var templateCache = require('gulp-angular-templatecache');
+var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
 var webserver = require('gulp-webserver');
 
-gulp.task('uglify', function() {
-	return gulp.src('./src/bng-selector.js')
+gulp.task('pack-templates', function () {
+	return gulp.src('./src/bng-selector.html')
+		.pipe(templateCache({module: 'bng-selector'}))
+		.pipe(gulp.dest('./tmp/'));
+});
+
+gulp.task('uglify', ['pack-templates'], function() {
+	return gulp.src([
+			'./src/bng-selector.js',
+			'./tmp/templates.js'
+		])
+		.pipe(concat('bng-selector.min.js'))
 		.pipe(uglify())
-		.pipe(rename(function (path) {
-			path.basename += ".min";
-			return path;
-		}))
 		.pipe(gulp.dest('./dist'))
 		.pipe(gulp.dest('./demo'));
 });

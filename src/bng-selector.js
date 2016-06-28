@@ -16,14 +16,7 @@
 			onSelect: '&',
 			onUnselect: '&'
 		},
-		template:
-			'<div class="bng-selector">' + 
-			'	<ul>' +
-			'		<li ng-repeat="opt in $ctrl.options">' +
-			'			{{opt}}' +
-			'		</li>' +
-			'	</ul>' +
-			'</div>',
+		templateUrl: 'bng-selector.html',
 		controller: bngSelectorController
 	});
 }());

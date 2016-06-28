@@ -1,3 +1,4 @@
 .idea/
+tmp/
 node_modules/
 demo/bng-selector.min.js
