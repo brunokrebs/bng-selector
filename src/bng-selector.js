@@ -16,7 +16,7 @@
 					inputFilter.focus();
 				}, 100);
 			} else {
-				closeFilter();
+				closeFilter(true);
 			}
 		};
 
@@ -81,7 +81,12 @@
 
 		ctrl.$onChanges = function (changedObject) {
 			if (changedObject.options && changedObject.options.currentValue) {
-				ctrl.options = changedObject.options.currentValue;
+				if (changedObject.options.isFirstChange()) {
+					return;
+				}
+				console.log('updating');
+				ctrl.filteredOptions = changedObject.options.currentValue;
+				ctrl.clear();
 			}
 		};
 

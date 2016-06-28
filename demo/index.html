@@ -46,6 +46,7 @@
 				Sed ut dapibus diam. Praesent ornare quis justo nec elementum. Aenean tristique lectus nec odio semper,
 				non scelerisque odio faucibus. Pellentesque ut nunc odio.
 			</p>
+			<button ng-click="ctrl.changeOptions()">Change options.</button>
 		</div>
 	</div>
 </div>
@@ -66,6 +67,12 @@
 				{name: 'Fernando'}, {name: 'Gisele'}, {name: 'Hilton'}, {name: 'Inayara'},
 				{name: 'João'}, {name: 'Kimberly'}, {name: 'Leandro'}, {name: 'Maria Helena'}
 			];
+
+			ctrl.changeOptions = function() {
+				ctrl.options = [
+					{name: 'Natália'}, {name: 'Otávio'}, {name: 'Paula'}, {name: 'Querubim'}
+				];
+			};
 
 			ctrl.optionSelected = function(option) {
 				ctrl.title = option.name;
