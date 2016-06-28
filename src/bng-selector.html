@@ -7,12 +7,14 @@
 		   ng-click="$ctrl.unselectBrand($event)"></i>
 	</div>
 	<div class="bng-selector-filter" ng-show="$ctrl.showFilter">
-		<input type="text">
-		<ul>
-			<li ng-repeat="opt in $ctrl.options"
-				ng-click="$ctrl.selected = opt">
-				{{opt}}
-			</li>
-		</ul>
+		<div class="bng-selector-filter-area">
+			<input type="text">
+			<ul>
+				<li ng-repeat="opt in $ctrl.options"
+					ng-click="$ctrl.selected = opt">
+					{{opt}}
+				</li>
+			</ul>
+		</div>
 	</div>
 </div>
