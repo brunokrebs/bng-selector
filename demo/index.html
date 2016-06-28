@@ -27,7 +27,8 @@
 		<div class="col-xs-12" ng-controller="demoController as ctrl">
 			<bng-selector options="ctrl.options"
 						  on-select="ctrl.optionSelected(option)"
-						  on-unselect="ctrl.optionUnselected()">
+						  on-unselect="ctrl.optionUnselected()"
+						  label="name">
 			</bng-selector>
 			<h2>{{ctrl.title}}</h2>
 			<p>
@@ -61,13 +62,13 @@
 			ctrl.title = 'Some title';
 
 			ctrl.options = [
-				{label: 'Bruno'}, {label: 'Carolina'}, {label: 'Danilo'}, {label: 'Eduarda'},
-				{label: 'Fernando'}, {label: 'Gisele'}, {label: 'Hilton'}, {label: 'Inayara'},
-				{label: 'João'}, {label: 'Kimberly'}, {label: 'Leandro'}, {label: 'Maria Helena'}
+				{name: 'Bruno'}, {name: 'Carolina'}, {name: 'Danilo'}, {name: 'Eduarda'},
+				{name: 'Fernando'}, {name: 'Gisele'}, {name: 'Hilton'}, {name: 'Inayara'},
+				{name: 'João'}, {name: 'Kimberly'}, {name: 'Leandro'}, {name: 'Maria Helena'}
 			];
 
 			ctrl.optionSelected = function(option) {
-				ctrl.title = option.label;
+				ctrl.title = option.name;
 			};
 
 			ctrl.optionUnselected = function() {

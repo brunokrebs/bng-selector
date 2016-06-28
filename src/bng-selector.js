@@ -29,7 +29,7 @@
 			ctrl.filteredOptions = [];
 			for (var i = 0; i < ctrl.options.length; i++) {
 				var option = ctrl.options[i];
-				if (option.label.toLowerCase().indexOf(term) !== -1)
+				if (option[ctrl.label].toLowerCase().indexOf(term) !== -1)
 					ctrl.filteredOptions.push(option);
 			}
 			return ctrl.filteredOptions;
@@ -38,6 +38,7 @@
 		ctrl.select = function(option) {
 			ctrl.showFilter = false;
 			ctrl.selected = option;
+			ctrl.selected.label = option[ctrl.label];
 			ctrl.onSelect({option: option});
 		};
 
@@ -86,7 +87,8 @@
 		bindings: {
 			onSelect: '&',
 			onUnselect: '&',
-			options: '<'
+			options: '<',
+			label: '@'
 		},
 		templateUrl: 'bng-selector.html',
 		controller: bngSelectorController

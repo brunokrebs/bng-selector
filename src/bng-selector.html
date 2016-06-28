@@ -1,6 +1,6 @@
 <div class="bng-selector">
 	<div class="bng-selector-selected" ng-click="$ctrl.toggleFilter($event)">
-		{{$ctrl.selected.label}}
+		{{$ctrl.selected[$ctrl.label]}}
 		<i class="fa fa-caret-down" ng-show="! $ctrl.showFilter"></i>
 		<i class="fa fa-caret-up" ng-show="$ctrl.showFilter"></i>
 		<i class="fa fa-times" ng-show="$ctrl.selected"
@@ -14,7 +14,7 @@
 			<ul>
 				<li ng-repeat="opt in $ctrl.filteredOptions"
 					ng-click="$ctrl.select(opt)">
-					{{opt.label}}
+					{{opt[$ctrl.label]}}
 				</li>
 			</ul>
 		</div>
