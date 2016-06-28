@@ -84,7 +84,6 @@
 				if (changedObject.options.isFirstChange()) {
 					return;
 				}
-				console.log('updating');
 				ctrl.filteredOptions = changedObject.options.currentValue;
 				ctrl.clear();
 			}
