@@ -79,6 +79,12 @@
 			}
 		}
 
+		ctrl.$onChanges = function (changedObject) {
+			if (changedObject.options && changedObject.options.currentValue) {
+				ctrl.options = changedObject.options.currentValue;
+			}
+		};
+
 		ctrl.clear();
 	};
 	bngSelectorController.$inject = ['$element', '$timeout', '$scope'];
