@@ -25,8 +25,11 @@
 <div class="container" ng-app="demoApp">
 	<div class="row">
 		<div class="col-xs-12" ng-controller="demoController as ctrl">
-			<bng-selector options="ctrl.options"></bng-selector>
-			<h2>Nulla sit amet mi non</h2>
+			<bng-selector options="ctrl.options"
+						  on-select="ctrl.optionSelected(option)"
+						  on-unselect="ctrl.optionUnselected()">
+			</bng-selector>
+			<h2>{{ctrl.title}}</h2>
 			<p>
 				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nibh tortor, scelerisque vehicula orci
 				vel, iaculis luctus mi. Vivamus imperdiet mollis lectus, rutrum vestibulum dui. Pellentesque iaculis
@@ -54,11 +57,22 @@
 
 		var demoController = function() {
 			var ctrl = this;
+
+			ctrl.title = 'Some title';
+
 			ctrl.options = [
 				{label: 'Bruno'}, {label: 'Carolina'}, {label: 'Danilo'}, {label: 'Eduarda'},
 				{label: 'Fernando'}, {label: 'Gisele'}, {label: 'Hilton'}, {label: 'Inayara'},
 				{label: 'João'}, {label: 'Kimberly'}, {label: 'Leandro'}, {label: 'Maria Helena'}
 			];
+
+			ctrl.optionSelected = function(option) {
+				ctrl.title = option.label;
+			};
+
+			ctrl.optionUnselected = function() {
+				ctrl.title = 'Some title';
+			};
 		};
 		demoApp.controller('demoController', demoController);
 	}());

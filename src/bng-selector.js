@@ -36,6 +36,7 @@
 		ctrl.select = function(option) {
 			ctrl.showFilter = false;
 			ctrl.selected = option;
+			ctrl.onSelect({option: option});
 		};
 
 		ctrl.clear = function($event) {
@@ -43,6 +44,7 @@
 			ctrl.term = '';
 			ctrl.filteredOptions = ctrl.options;
 			ctrl.showFilter = false;
+			ctrl.onUnselect();
 			if ($event) {
 				$event.stopPropagation();
 			}
