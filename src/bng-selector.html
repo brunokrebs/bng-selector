@@ -1,18 +1,20 @@
 <div class="bng-selector">
 	<div class="bng-selector-selected" ng-click="$ctrl.toggleFilter($event)">
-		{{$ctrl.selected}}
+		{{$ctrl.selected.label}}
 		<i class="fa fa-caret-down" ng-show="! $ctrl.showFilter"></i>
 		<i class="fa fa-caret-up" ng-show="$ctrl.showFilter"></i>
-		<i class="fa fa-times" ng-show="$ctrl.selectedBrand"
-		   ng-click="$ctrl.unselectBrand($event)"></i>
+		<i class="fa fa-times" ng-show="$ctrl.selected"
+		   ng-click="$ctrl.clear($event)"></i>
 	</div>
 	<div class="bng-selector-filter" ng-show="$ctrl.showFilter">
 		<div class="bng-selector-filter-area">
-			<input class="bng-selector-filter-input" type="text">
+			<input class="bng-selector-filter-input" type="text"
+				   ng-change="$ctrl.suggest()"
+				   ng-model="$ctrl.term">
 			<ul>
-				<li ng-repeat="opt in $ctrl.options"
-					ng-click="$ctrl.selected = opt">
-					{{opt}}
+				<li ng-repeat="opt in $ctrl.filteredOptions"
+					ng-click="$ctrl.select(opt)">
+					{{opt.label}}
 				</li>
 			</ul>
 		</div>

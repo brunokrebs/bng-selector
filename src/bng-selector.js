@@ -16,6 +16,39 @@
 				}, 100);
 			}
 		};
+
+		ctrl.suggest = function () {
+			term = ctrl.term.trim().toLowerCase();
+			if (term == '') {
+				return ctrl.filteredOptions = ctrl.options;
+			}
+
+			console.log(term);
+			ctrl.filteredOptions = [];
+			for (var i = 0; i < ctrl.options.length; i++) {
+				var option = ctrl.options[i];
+				if (option.label.toLowerCase().indexOf(term) !== -1)
+					ctrl.filteredOptions.push(option);
+			}
+			return ctrl.filteredOptions;
+		};
+		
+		ctrl.select = function(option) {
+			ctrl.showFilter = false;
+			ctrl.selected = option;
+		};
+
+		ctrl.clear = function($event) {
+			ctrl.selected = null;
+			ctrl.term = '';
+			ctrl.filteredOptions = ctrl.options;
+			ctrl.showFilter = false;
+			if ($event) {
+				$event.stopPropagation();
+			}
+		};
+
+		ctrl.clear();
 	};
 	bngSelectorController.$inject = ['$element', '$timeout'];
 
