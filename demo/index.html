@@ -58,16 +58,22 @@
 	(function() {
 		var demoApp = angular.module('demoApp', ['bng-selector']);
 
-		var demoController = function() {
+		var demoController = function($timeout) {
 			var ctrl = this;
 
 			ctrl.title = 'Some title';
 
 			ctrl.options = [
-				{name: 'Bruno'}, {name: 'Carolina'}, {name: 'Danilo'}, {name: 'Eduarda'},
-				{name: 'Fernando'}, {name: 'Gisele'}, {name: 'Hilton'}, {name: 'Inayara'},
-				{name: 'João'}, {name: 'Kimberly'}, {name: 'Leandro'}, {name: 'Maria Helena'}
+				{name: 'Bruno'}, {name: 'Carolina'}, {name: 'Danilo'}, {name: 'Eduarda'}
 			];
+
+			$timeout(function() {
+				ctrl.options = [
+					{name: 'Bruno'}, {name: 'Carolina'}, {name: 'Danilo'}, {name: 'Eduarda'},
+					{name: 'Fernando'}, {name: 'Gisele'}, {name: 'Hilton'}, {name: 'Inayara'},
+					{name: 'João'}, {name: 'Kimberly'}, {name: 'Leandro'}, {name: 'Maria Helena'}
+				];
+			}, 1000);
 
 			ctrl.selected = {name: 'Bruno'};
 

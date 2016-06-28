@@ -87,7 +87,6 @@
 			if (changedObject.options && changedObject.options.currentValue) {
 				if (!changedObject.options.isFirstChange()) {
 					ctrl.filteredOptions = changedObject.options.currentValue;
-					ctrl.clear();
 				}
 			}
 			if (changedObject.selected && changedObject.selected.currentValue) {
