@@ -1,7 +1,18 @@
 <div class="bng-selector">
-	<ul>
-		<li ng-repeat="opt in $ctrl.options">
-			{{opt}}
-		</li>
-	</ul>
+	<div class="bng-selector-selected" ng-click="$ctrl.toggleFilter($event)">
+		{{$ctrl.selected}}
+		<i class="fa fa-caret-down" ng-show="! $ctrl.showFilter"></i>
+		<i class="fa fa-caret-up" ng-show="$ctrl.showFilter"></i>
+		<i class="fa fa-times" ng-show="$ctrl.selectedBrand"
+		   ng-click="$ctrl.unselectBrand($event)"></i>
+	</div>
+	<div class="bng-selector-filter" ng-show="$ctrl.showFilter">
+		<input type="text">
+		<ul>
+			<li ng-repeat="opt in $ctrl.options"
+				ng-click="$ctrl.selected = opt">
+				{{opt}}
+			</li>
+		</ul>
+	</div>
 </div>

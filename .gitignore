@@ -2,3 +2,4 @@
 tmp/
 node_modules/
 demo/bng-selector.min.js
+demo/bng-selector.min.css

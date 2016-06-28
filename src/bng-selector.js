@@ -3,6 +3,13 @@
 
 	var bngSelectorController = function() {
 		var ctrl = this;
+
+		ctrl.toggleFilter = function($event) {
+			ctrl.showFilter = !ctrl.showFilter;
+			if ($event) {
+				$event.stopPropagation();
+			}
+		};
 	};
 	bngSelectorController.$inject = [];
 
