@@ -5,6 +5,10 @@ var uglify = require('gulp-uglify');
 var cleanCSS = require('gulp-clean-css');
 var rename = require('gulp-rename');
 var webserver = require('gulp-webserver');
+var filter = require('gulp-filter');
+var tagVersion = require('gulp-tag-version');
+var bump = require('gulp-bump');
+var git = require('gulp-git');
 
 gulp.task('pack-templates', function () {
 	return gulp.src('./src/bng-selector.html')
@@ -40,4 +44,31 @@ gulp.task('watch', ['clean-css'], function() {
 gulp.task('webserver', ['watch'], function() {
 	gulp.src('./demo')
 		.pipe(webserver({ port: 8000 }));
+});
+
+function inc(importance) {
+	// get all the files to bump version in
+	return gulp.src(['./package.json', './bower.json'])
+	// bump the version number in those files
+		.pipe(bump({type: importance}))
+		// save it back to filesystem
+		.pipe(gulp.dest('./'))
+		// commit the changed version number
+		.pipe(git.commit('bumps package version'))
+
+		// read only one file to get the version number
+		.pipe(filter('package.json'))
+		// **tag it in the repository**
+		.pipe(tagVersion());
+}
+
+gulp.task('patch', function() { return inc('patch'); });
+gulp.task('feature', function() { return inc('minor'); });
+gulp.task('release', function() { return inc('major'); });
+
+gulp.task('push', function() {
+	var packageJson = require('./package.json');
+	git.push('origin', 'v' + packageJson.version, function (err) {
+		if (err) throw err;
+	});
 });
