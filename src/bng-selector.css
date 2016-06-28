@@ -9,7 +9,7 @@
 	height: 30px;
 	padding-left: 10px;
 	padding-right: 10px;
-	line-height: 35px;
+	line-height: 30px;
 	cursor: pointer;
 }
 
@@ -57,4 +57,21 @@
 
 .bng-selector-filter-area input {
 	width: 100%;
+}
+
+.bng-selector-filter-area ul {
+	padding: 0;
+	list-style: none;
+	max-height: 200px;
+	overflow: auto;
+}
+
+.bng-selector-filter-area ul li {
+	line-height: 35px;
+	padding-left: 5px;
+}
+
+.bng-selector-filter-area ul li:hover {
+	background-color: #428bca;
+	color: #fff;
 }
