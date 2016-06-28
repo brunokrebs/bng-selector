@@ -92,8 +92,8 @@
 			}
 			if (changedObject.selected && changedObject.selected.currentValue) {
 				if (!changedObject.selected.isFirstChange()) {
-					ctrl.selected = changedObject.selected;
-					ctrl.selected.label = changedObject.selected[ctrl.label];
+					ctrl.selected = changedObject.selected.currentValue;
+					ctrl.selected.label = changedObject.selected.currentValue[ctrl.label];
 				}
 			}
 		};
