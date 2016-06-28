@@ -1,19 +1,22 @@
 (function() {
 	var bngSelector = angular.module('bng-selector', []);
 
-	var bngSelectorController = function($element, $timeout) {
+	var bngSelectorController = function($element, $timeout, $scope) {
 		var ctrl = this;
+		var componentElement = $element[0];
+		var inputFilter = componentElement.querySelector('.bng-selector-filter-input');
 
 		ctrl.toggleFilter = function($event) {
-			ctrl.showFilter = !ctrl.showFilter;
 			if ($event) {
 				$event.stopPropagation();
 			}
-			if (ctrl.showFilter) {
-				var input = $element[0].querySelector('.bng-selector-filter-input');
+			if (!ctrl.showFilter) {
+				openFilter();
 				$timeout(function() {
-					input.focus();
+					inputFilter.focus();
 				}, 100);
+			} else {
+				closeFilter();
 			}
 		};
 
@@ -23,7 +26,6 @@
 				return ctrl.filteredOptions = ctrl.options;
 			}
 
-			console.log(term);
 			ctrl.filteredOptions = [];
 			for (var i = 0; i < ctrl.options.length; i++) {
 				var option = ctrl.options[i];
@@ -50,9 +52,28 @@
 			}
 		};
 
+		function openFilter() {
+			componentElement.addEventListener('keydown', handleKeyDown);
+			inputFilter.addEventListener('keydown', handleKeyDown);
+			ctrl.showFilter = true;
+		}
+
+		function closeFilter() {
+			componentElement.removeEventListener('keydown', handleKeyDown);
+			inputFilter.removeEventListener('keydown', handleKeyDown);
+			ctrl.showFilter = false;
+			$scope.$apply();
+		}
+
+		function handleKeyDown(event) {
+			if (event.keyCode == 27 ) {
+				closeFilter();
+			}
+		}
+
 		ctrl.clear();
 	};
-	bngSelectorController.$inject = ['$element', '$timeout'];
+	bngSelectorController.$inject = ['$element', '$timeout', '$scope'];
 
 	bngSelector.component('bngSelector', {
 		bindings: {
