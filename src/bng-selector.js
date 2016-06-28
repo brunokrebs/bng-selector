@@ -54,14 +54,20 @@
 
 		function openFilter() {
 			componentElement.addEventListener('keydown', handleKeyDown);
-			inputFilter.addEventListener('keydown', handleKeyDown);
+			componentElement.addEventListener('blur', closeFilter);
+			inputFilter.addEventListener('blur', function() {
+				$timeout(function() {
+					closeFilter();
+				}, 150);
+			});
 			ctrl.showFilter = true;
 		}
 
-		function closeFilter() {
+		function closeFilter(event) {
 			componentElement.removeEventListener('keydown', handleKeyDown);
 			inputFilter.removeEventListener('keydown', handleKeyDown);
 			ctrl.showFilter = false;
+			ctrl.term = '';
 			$scope.$apply();
 		}
 
