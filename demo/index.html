@@ -22,8 +22,8 @@
 
 <div class="container" ng-app="demoApp">
 	<div class="row">
-		<div class="col-xs-12">
-			<bng-selector></bng-selector>
+		<div class="col-xs-12" ng-controller="demoController as ctrl">
+			<bng-selector options="ctrl.options"></bng-selector>
 		</div>
 	</div>
 </div>
@@ -32,7 +32,16 @@
 <script src="bng-selector.min.js"></script>
 <script>
 	(function() {
-		angular.module('demoApp', ['bng-selector']);
+		var demoApp = angular.module('demoApp', ['bng-selector']);
+
+		var demoController = function() {
+			var ctrl = this;
+			ctrl.options = [
+					'Ana Maria', 'Bruno', 'Carolina', 'Danilo', 'Eduarda', 'Fernando', 'Gisele',
+					'Hilton', 'Inayara', 'João', 'Kimberly', 'Leandro', 'Maria Helena'
+			];
+		};
+		demoApp.controller('demoController', demoController);
 	}());
 </script>
 </body>
