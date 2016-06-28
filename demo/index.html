@@ -28,7 +28,7 @@
 			<bng-selector options="ctrl.options"
 						  on-select="ctrl.optionSelected(option)"
 						  on-unselect="ctrl.optionUnselected()"
-						  label="name">
+						  label="name" selected="ctrl.selected">
 			</bng-selector>
 			<h2>{{ctrl.title}}</h2>
 			<p>
@@ -67,6 +67,8 @@
 				{name: 'Fernando'}, {name: 'Gisele'}, {name: 'Hilton'}, {name: 'Inayara'},
 				{name: 'João'}, {name: 'Kimberly'}, {name: 'Leandro'}, {name: 'Maria Helena'}
 			];
+
+			ctrl.selected = {name: 'Bruno'};
 
 			ctrl.changeOptions = function() {
 				ctrl.options = [

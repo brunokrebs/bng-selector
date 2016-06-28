@@ -6,6 +6,10 @@
 		var componentElement = $element[0];
 		var inputFilter = componentElement.querySelector('.bng-selector-filter-input');
 
+		ctrl.showFilter = false;
+		ctrl.term = '';
+		ctrl.filteredOptions = ctrl.options;
+
 		ctrl.toggleFilter = function($event) {
 			if ($event) {
 				$event.stopPropagation();
@@ -81,15 +85,18 @@
 
 		ctrl.$onChanges = function (changedObject) {
 			if (changedObject.options && changedObject.options.currentValue) {
-				if (changedObject.options.isFirstChange()) {
-					return;
+				if (!changedObject.options.isFirstChange()) {
+					ctrl.filteredOptions = changedObject.options.currentValue;
+					ctrl.clear();
 				}
-				ctrl.filteredOptions = changedObject.options.currentValue;
-				ctrl.clear();
+			}
+			if (changedObject.selected && changedObject.selected.currentValue) {
+				if (!changedObject.selected.isFirstChange()) {
+					ctrl.selected = changedObject.selected;
+					ctrl.selected.label = changedObject.selected[ctrl.label];
+				}
 			}
 		};
-
-		ctrl.clear();
 	};
 	bngSelectorController.$inject = ['$element', '$timeout', '$scope'];
 
@@ -98,6 +105,7 @@
 			onSelect: '&',
 			onUnselect: '&',
 			options: '<',
+			selected: '<',
 			label: '@'
 		},
 		templateUrl: 'bng-selector.html',
