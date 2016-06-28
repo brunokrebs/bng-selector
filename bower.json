@@ -6,7 +6,10 @@
     "Bruno Krebs <bruno.krebs@tecsinapse.com.br>"
   ],
   "description": "Angular select component",
-  "main": "",
+  "main": [
+    "./dist/bng-selector.min.css",
+    "./dist/bng-selector.min.js"
+  ],
   "keywords": [
     "angular",
     "select",
