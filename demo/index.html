@@ -28,7 +28,8 @@
 			<bng-selector options="ctrl.options"
 						  on-select="ctrl.optionSelected(option)"
 						  on-unselect="ctrl.optionUnselected()"
-						  label="name" selected="ctrl.selected">
+						  label="name" selected="ctrl.selected"
+						  disabled="ctrl.disabled">
 			</bng-selector>
 			<h2>{{ctrl.title}}</h2>
 			<p>
@@ -48,6 +49,7 @@
 			</p>
 			<button ng-click="ctrl.changeOptions()">Change options</button>
 			<button ng-click="ctrl.changeSelected()">Change selected</button>
+			<button ng-click="ctrl.disabled = !ctrl.disabled">Toggle disabled</button>
 		</div>
 	</div>
 </div>

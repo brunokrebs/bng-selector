@@ -1,4 +1,4 @@
-<div class="bng-selector">
+<div class="bng-selector" ng-class="{ 'disabled': $ctrl.disabled }">
 	<div class="bng-selector-selected" ng-click="$ctrl.toggleFilter($event)">
 		{{$ctrl.selected[$ctrl.label]}}
 		<i class="fa fa-caret-down" ng-show="! $ctrl.showFilter"></i>

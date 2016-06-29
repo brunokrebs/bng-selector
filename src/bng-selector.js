@@ -11,6 +11,9 @@
 		ctrl.filteredOptions = ctrl.options;
 
 		ctrl.toggleFilter = function($event) {
+			if (ctrl.disabled) {
+				return;
+			}
 			if ($event) {
 				$event.stopPropagation();
 			}
@@ -47,6 +50,9 @@
 		};
 
 		ctrl.clear = function($event) {
+			if (ctrl.disabled) {
+				return;
+			}
 			ctrl.selected = null;
 			closeFilter(true);
 			ctrl.onUnselect();
@@ -105,6 +111,7 @@
 			onUnselect: '&',
 			options: '<',
 			selected: '<',
+			disabled: '<',
 			label: '@'
 		},
 		templateUrl: 'bng-selector.html',
