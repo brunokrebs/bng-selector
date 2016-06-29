@@ -20,36 +20,43 @@
 	<![endif]-->
 </head>
 <body>
-<h1>bng-selector</h1>
 
 <div class="container" ng-app="demoApp">
 	<div class="row">
 		<div class="col-xs-12" ng-controller="demoController as ctrl">
+			<h1>bng-selector - Angular selector component</h1>
+
 			<bng-selector options="ctrl.options"
 						  on-select="ctrl.optionSelected(option)"
 						  on-unselect="ctrl.optionUnselected()"
 						  label="name" selected="ctrl.selected"
 						  disabled="ctrl.disabled">
 			</bng-selector>
-			<h2>{{ctrl.title}}</h2>
+			<h2>I chose: {{ctrl.title}}</h2>
 			<p>
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam nibh tortor, scelerisque vehicula orci
-				vel, iaculis luctus mi. Vivamus imperdiet mollis lectus, rutrum vestibulum dui. Pellentesque iaculis
-				malesuada lacinia. Sed facilisis dui et ipsum egestas maximus. Duis viverra augue mi, et pharetra velit
-				tincidunt eu. Nulla a est at est laoreet pharetra quis ac dolor. Nullam vehicula enim eu ligula
-				lobortis, vitae porttitor metus consequat. Aliquam tincidunt massa non diam sagittis posuere.
+				This is a demo for the angular component that I wrote. This component is useful to use in place
+				of regular html select input. It adds the capability to filter the available options to help
+				the user to find the desired item.
+			</p>
+			<h3>Simulate</h3>
+			<p>
+				<button class="btn btn-primary btn-sm" ng-click="ctrl.changeOptions()">Change options</button>
+				<button class="btn btn-primary btn-sm" ng-click="ctrl.changeSelected()">Change selected</button>
+				<button class="btn btn-primary btn-sm" ng-click="ctrl.disabled = !ctrl.disabled">Toggle disabled</button>
 			</p>
 			<p>
-				Sed ut pretium velit. Nam eleifend mollis ex nec finibus. Nunc pretium magna tellus, et suscipit tortor
-				cursus at. Vivamus sit amet ante lectus. Nunc commodo felis pellentesque urna vestibulum tincidunt.
-				Donec viverra ultrices urna at ullamcorper. Curabitur iaculis eu lectus sit amet tempus. Pellentesque
-				euismod, leo quis tincidunt lobortis, ex orci varius lectus, varius lobortis urna mauris vel nunc.
-				Sed ut dapibus diam. Praesent ornare quis justo nec elementum. Aenean tristique lectus nec odio semper,
-				non scelerisque odio faucibus. Pellentesque ut nunc odio.
+				The buttons above simulate some situations that this component must handle. The first one, called
+				'Change options' changes the options (items) available to selection. The second button, called 'Change
+				selected', simulates a situation where the selected object is changed outside the component. And the
+				third button, called 'Toggle disabled', changes the state of this component between disabled and
+				enabled.
 			</p>
-			<button ng-click="ctrl.changeOptions()">Change options</button>
-			<button ng-click="ctrl.changeSelected()">Change selected</button>
-			<button ng-click="ctrl.disabled = !ctrl.disabled">Toggle disabled</button>
+			<h3>Improvements</h3>
+			<p>
+				I do have a few more plans on how to extend it. Like being able to navigate through the options
+				with the directional keys. Selecting with enter. Enabling multi-selection and so on. I also have
+				some ideas on how to improve performance as well, like debouncing functions and alikes.
+			</p>
 		</div>
 	</div>
 </div>
@@ -63,8 +70,6 @@
 		var demoController = function($timeout) {
 			var ctrl = this;
 
-			ctrl.title = 'Some title';
-
 			ctrl.options = [
 				{name: 'Bruno'}, {name: 'Carolina'}, {name: 'Danilo'}, {name: 'Eduarda'}
 			];
@@ -77,8 +82,6 @@
 				];
 			}, 1000);
 
-			ctrl.selected = {name: 'Bruno'};
-
 			ctrl.changeOptions = function() {
 				ctrl.options = [
 					{name: 'Natália'}, {name: 'Otávio'}, {name: 'Paula'}, {name: 'Querubim'}
@@ -87,6 +90,7 @@
 
 			ctrl.changeSelected = function() {
 				ctrl.selected = {name: 'Gisele'};
+				ctrl.optionSelected(ctrl.selected);
 			};
 
 			ctrl.optionSelected = function(option) {
@@ -94,8 +98,11 @@
 			};
 
 			ctrl.optionUnselected = function() {
-				ctrl.title = 'Some title';
+				ctrl.title = 'No one!';
 			};
+
+			ctrl.selected = {name: 'Bruno'};
+			ctrl.optionSelected(ctrl.selected);
 		};
 		demoApp.controller('demoController', demoController);
 	}());
