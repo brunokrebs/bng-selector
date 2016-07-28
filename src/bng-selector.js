@@ -58,27 +58,26 @@
 				ctrl.selected.label = option[ctrl.label];
 				ctrl.onSelect({option: option});
 			} else {
-				delete option.selected;
+				delete option.selectedBng;
 				var indexOf = ctrl.selectedItems.indexOf(option);
-				var hasBeenSelected = indexOf >= 0;
-				if (hasBeenSelected) {
+				if (indexOf >= 0) {
+					option.selectedBng = false;
 					ctrl.selectedItems.splice(indexOf, 1);
 				} else {
+					option.selectedBng = true;
 					ctrl.selectedItems.push(option);
 				}
 				ctrl.onSelect({option: ctrl.selectedItems});
-				option.selected = hasBeenSelected;
 			}
 		};
 
 		ctrl.selectAll = function() {
 			for (var i = 0; i < ctrl.filteredOptions.length; i++) {
 				var item = ctrl.filteredOptions[i];
-				delete item.selected;
 				var indexOf = ctrl.selectedItems.indexOf(item);
 				if (indexOf < 0) {
 					ctrl.selectedItems.push(item);
-					item.selected = true;
+					item.selectedBng = true;
 				}
 			}
 			ctrl.onSelect({option: ctrl.selectedItems});
@@ -92,7 +91,7 @@
 			ctrl.selectedItems = [];
 			closeFilter(true);
 			for (var i = 0; i < ctrl.options.length; i++) {
-				delete ctrl.options[i].selected;
+				delete ctrl.options[i].selectedBng;
 			}
 			ctrl.onUnselect();
 			if ($event) {

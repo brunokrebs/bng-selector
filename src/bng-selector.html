@@ -25,7 +25,7 @@
 				<li ng-repeat="opt in $ctrl.filteredOptions"
 					ng-click="$ctrl.select(opt)" class="bng-selector-option">
 					<input type="checkbox" ng-show="$ctrl.multi"
-						   ng-model="opt.selected" />
+						   ng-model="opt.selectedBng" />
 					{{opt[$ctrl.label]}}
 				</li>
 			</ul>

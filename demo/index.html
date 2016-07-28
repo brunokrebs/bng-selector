@@ -98,6 +98,9 @@
 
 			ctrl.multiSelectionEvent = function(selectedItems) {
 				ctrl.selectedItems = selectedItems;
+				for (var i = 0; i < selectedItems.length; i++) {
+					console.log(JSON.stringify(selectedItems[i]));
+				}
 			};
 
 			ctrl.clearMulti= function() {
