@@ -150,7 +150,8 @@
 			options: '<',
 			selected: '<',
 			multi: '<',
-			selectAllLabel: '<',
+			selectAllLabel: '@',
+			clearAllLabel: '@',
 			disabled: '<',
 			label: '@'
 		},
