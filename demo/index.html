@@ -25,14 +25,15 @@
 	<div class="row">
 		<div class="col-xs-12" ng-controller="demoController as ctrl">
 			<h1>bng-selector - Angular selector component</h1>
-
+			<hr />
+			<h2>Simple selection with filter</h2>
 			<bng-selector options="ctrl.options"
 						  on-select="ctrl.optionSelected(option)"
 						  on-unselect="ctrl.optionUnselected()"
 						  label="name" selected="ctrl.selected"
 						  disabled="ctrl.disabled">
 			</bng-selector>
-			<h2>I chose: {{ctrl.title}}</h2>
+			<h3>Choice: {{ctrl.title}}</h3>
 			<p>
 				This is a demo for the angular component that I wrote. This component is useful to use in place
 				of regular html select input. It adds the capability to filter the available options to help
@@ -44,19 +45,17 @@
 				<button class="btn btn-primary btn-sm" ng-click="ctrl.changeSelected()">Change selected</button>
 				<button class="btn btn-primary btn-sm" ng-click="ctrl.disabled = !ctrl.disabled">Toggle disabled</button>
 			</p>
-			<p>
-				The buttons above simulate some situations that this component must handle. The first one, called
-				'Change options' changes the options (items) available to selection. The second button, called 'Change
-				selected', simulates a situation where the selected object is changed outside the component. And the
-				third button, called 'Toggle disabled', changes the state of this component between disabled and
-				enabled.
-			</p>
-			<h3>Improvements</h3>
-			<p>
-				I do have a few more plans on how to extend it. Like being able to navigate through the options
-				with the directional keys. Selecting with enter. Enabling multi-selection and so on. I also have
-				some ideas on how to improve performance as well, like debouncing functions and alikes.
-			</p>
+			<hr />
+			<h2>Multi selection with filter</h2>
+			<bng-selector multi="true" options="ctrl.options"
+						  on-select="ctrl.multiSelectionEvent(option)"
+						  on-unselect="ctrl.clearMulti()"
+						  label="name" selected="ctrl.selectedItems">
+			</bng-selector>
+			<h3>Selected items:</h3>
+			<ul>
+				<li ng-repeat="item in ctrl.selectedItems">{{item.name}}</li>
+			</ul>
 		</div>
 	</div>
 </div>
@@ -69,10 +68,6 @@
 
 		var demoController = function($timeout) {
 			var ctrl = this;
-
-			ctrl.options = [
-				{name: 'Bruno'}, {name: 'Carolina'}, {name: 'Danilo'}, {name: 'Eduarda'}
-			];
 
 			$timeout(function() {
 				ctrl.options = [
@@ -100,6 +95,20 @@
 			ctrl.optionUnselected = function() {
 				ctrl.title = 'No one!';
 			};
+
+			ctrl.multiSelectionEvent = function(selectedItems) {
+				ctrl.selectedItems = selectedItems;
+			};
+
+			ctrl.clearMulti= function() {
+				ctrl.selectedItems = [];
+			};
+
+			ctrl.selectedItems = [];
+
+			ctrl.options = [
+				{name: 'Bruno'}, {name: 'Carolina'}, {name: 'Danilo'}, {name: 'Eduarda'}
+			];
 
 			ctrl.selected = {name: 'Bruno'};
 			ctrl.optionSelected(ctrl.selected);

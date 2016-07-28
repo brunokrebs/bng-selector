@@ -68,8 +68,9 @@
 	right: 45px;
 }
 
-.bng-selector-filter-area input {
+.bng-selector-filter-area .bng-selector-filter-input {
 	width: 100%;
+	outline: none;
 }
 
 .bng-selector-filter-area ul {
@@ -79,13 +80,17 @@
 	overflow: auto;
 }
 
-.bng-selector-filter-area ul li {
+.bng-selector-filter-area ul li:first-child {
+	margin-top: 10px;
+}
+
+.bng-selector-filter-area ul li.bng-selector-option {
 	line-height: 35px;
 	padding-left: 5px;
 	cursor: pointer;
 }
 
-.bng-selector-filter-area ul li:hover {
+.bng-selector-filter-area ul li.bng-selector-option:hover {
 	background-color: #428bca;
 	color: #fff;
 }

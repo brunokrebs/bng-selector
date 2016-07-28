@@ -3,7 +3,7 @@
 		{{$ctrl.selected[$ctrl.label]}}
 		<i class="fa fa-caret-down" ng-show="! $ctrl.showFilter"></i>
 		<i class="fa fa-caret-up" ng-show="$ctrl.showFilter"></i>
-		<i class="fa fa-times" ng-show="$ctrl.selected"
+		<i class="fa fa-times" ng-show="$ctrl.selected && !$ctrl.multi"
 		   ng-click="$ctrl.clear($event)"></i>
 	</div>
 	<div class="bng-selector-filter" ng-show="$ctrl.showFilter">
@@ -12,8 +12,20 @@
 				   ng-change="$ctrl.suggest()"
 				   ng-model="$ctrl.term">
 			<ul>
+				<li ng-show="$ctrl.multi">
+					<button class="btn btn-sm btn-default"
+							ng-click="$ctrl.selectAll()">
+						<i class="fa fa-check"></i> {{$ctrl.selectAllLabel}}
+					</button>
+					<button class="btn btn-sm btn-default"
+							ng-click="$ctrl.clear()">
+						<i class="fa fa-times"></i> {{$ctrl.clearAllLabel}}
+					</button>
+				</li>
 				<li ng-repeat="opt in $ctrl.filteredOptions"
-					ng-click="$ctrl.select(opt)">
+					ng-click="$ctrl.select(opt)" class="bng-selector-option">
+					<input type="checkbox" ng-show="$ctrl.multi"
+						   ng-model="opt.selected" />
 					{{opt[$ctrl.label]}}
 				</li>
 			</ul>

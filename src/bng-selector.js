@@ -9,6 +9,15 @@
 		ctrl.showFilter = false;
 		ctrl.term = '';
 		ctrl.filteredOptions = ctrl.options;
+		ctrl.selectedItems = [];
+
+		if (!ctrl.selectAllLabel) {
+			ctrl.selectAllLabel = 'Select all';
+		}
+
+		if (!ctrl.clearAllLabel) {
+			ctrl.clearAllLabel = 'Clear selection';
+		}
 
 		ctrl.toggleFilter = function($event) {
 			if (ctrl.disabled) {
@@ -44,9 +53,35 @@
 		
 		ctrl.select = function(option) {
 			ctrl.showFilter = false;
-			ctrl.selected = option;
-			ctrl.selected.label = option[ctrl.label];
-			ctrl.onSelect({option: option});
+			if (!ctrl.multi) {
+				ctrl.selected = option;
+				ctrl.selected.label = option[ctrl.label];
+				ctrl.onSelect({option: option});
+			} else {
+				delete option.selected;
+				var indexOf = ctrl.selectedItems.indexOf(option);
+				var hasBeenSelected = indexOf >= 0;
+				if (hasBeenSelected) {
+					ctrl.selectedItems.splice(indexOf, 1);
+				} else {
+					ctrl.selectedItems.push(option);
+				}
+				ctrl.onSelect({option: ctrl.selectedItems});
+				option.selected = hasBeenSelected;
+			}
+		};
+
+		ctrl.selectAll = function() {
+			for (var i = 0; i < ctrl.filteredOptions.length; i++) {
+				var item = ctrl.filteredOptions[i];
+				delete item.selected;
+				var indexOf = ctrl.selectedItems.indexOf(item);
+				if (indexOf < 0) {
+					ctrl.selectedItems.push(item);
+					item.selected = true;
+				}
+			}
+			ctrl.onSelect({option: ctrl.selectedItems});
 		};
 
 		ctrl.clear = function($event) {
@@ -54,7 +89,11 @@
 				return;
 			}
 			ctrl.selected = null;
+			ctrl.selectedItems = [];
 			closeFilter(true);
+			for (var i = 0; i < ctrl.options.length; i++) {
+				delete ctrl.options[i].selected;
+			}
 			ctrl.onUnselect();
 			if ($event) {
 				$event.stopPropagation();
@@ -95,7 +134,7 @@
 					ctrl.filteredOptions = changedObject.options.currentValue;
 				}
 			}
-			if (changedObject.selected && changedObject.selected.currentValue) {
+			if (!ctrl.multi && changedObject.selected && changedObject.selected.currentValue) {
 				if (!changedObject.selected.isFirstChange()) {
 					ctrl.selected = changedObject.selected.currentValue;
 					ctrl.selected.label = changedObject.selected.currentValue[ctrl.label];
@@ -111,6 +150,8 @@
 			onUnselect: '&',
 			options: '<',
 			selected: '<',
+			multi: '<',
+			selectAllLabel: '<',
 			disabled: '<',
 			label: '@'
 		},
