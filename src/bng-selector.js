@@ -1,5 +1,6 @@
 (function() {
 	var bngSelector = angular.module('bng-selector', []);
+	var ESC_KEY = 27;
 
 	var bngSelectorController = function($element, $timeout, $scope) {
 		var ctrl = this;
@@ -52,8 +53,8 @@
 		};
 		
 		ctrl.select = function(option) {
-			ctrl.showFilter = false;
 			if (!ctrl.multi) {
+				ctrl.showFilter = false;
 				ctrl.selected = option;
 				ctrl.selected.label = option[ctrl.label];
 				ctrl.onSelect({option: option});
@@ -89,7 +90,9 @@
 			}
 			ctrl.selected = null;
 			ctrl.selectedItems = [];
-			closeFilter(true);
+			if (!ctrl.multi) {
+				closeFilter(true);
+			}
 			for (var i = 0; i < ctrl.options.length; i++) {
 				delete ctrl.options[i].selectedBng;
 			}
@@ -101,10 +104,11 @@
 
 		function openFilter() {
 			componentElement.addEventListener('keydown', handleKeyDown);
-			componentElement.addEventListener('blur', closeFilter);
 			inputFilter.addEventListener('blur', function() {
 				$timeout(function() {
-					closeFilter();
+					if (!ctrl.multi) {
+						closeFilter();
+					}
 				}, 150);
 			});
 			ctrl.showFilter = true;
@@ -112,7 +116,6 @@
 
 		function closeFilter(avoidApply) {
 			componentElement.removeEventListener('keydown', handleKeyDown);
-			inputFilter.removeEventListener('keydown', handleKeyDown);
 			ctrl.showFilter = false;
 			ctrl.term = '';
 			ctrl.filteredOptions = ctrl.options;
@@ -122,7 +125,7 @@
 		}
 
 		function handleKeyDown(event) {
-			if (event.keyCode == 27 ) {
+			if (event.keyCode == ESC_KEY ) {
 				closeFilter();
 			}
 		}
