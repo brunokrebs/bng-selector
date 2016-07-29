@@ -1,34 +1,38 @@
 (function() {
 	var bngSelector = angular.module('bng-selector', []);
+	bngSelector.components = [];
 	var ESC_KEY = 27;
 
-	var bngSelectorController = function($element, $timeout, $scope, $rootScope, $window) {
+	window.addEventListener('click', function(event) {
+		var element = event.target;
+		var lastBngSelectorElement = null;
+		var clickedElsewhere = true;
+		while (hasDefaultClass(element)) {
+			// clicked in some bng selector component
+			clickedElsewhere = false;
+			lastBngSelectorElement = element;
+			element = element.parentElement;
+		}
+		for (var i = 0; i < bngSelector.components.length; i++) {
+			var component = bngSelector.components[i];
+			if (clickedElsewhere || component != lastBngSelectorElement) {
+				component.handleCloseSelector();
+			}
+		}
+	});
+
+	function hasDefaultClass(element) {
+		return (' ' + element.className + ' ').indexOf(' bng-selector-mhc ') > -1;
+	}
+
+	var bngSelectorController = function($element, $timeout, $scope) {
 		var ctrl = this;
 		var componentElement = $element[0];
 		var mainDiv = componentElement.firstChild;
+		bngSelector.components.push(mainDiv);
 		var inputFilter = componentElement.querySelector('.bng-selector-filter-input');
 
-		$scope.$on('some-fucking-event', function(event, target) {
-			if (mainDiv != target && ctrl.showFilter) {
-				closeFilter();
-			}
-		});
-
-		$window.addEventListener('click', function(event) {
-			var parent = event.target;
-			while (hasDefaultClass(parent)) {
-				if (parent == mainDiv) {
-					$rootScope.$broadcast('some-fucking-event', mainDiv);
-					return;
-				}
-				parent = parent.parentElement;
-			}
-			$rootScope.$broadcast('some-fucking-event', parent);
-		});
-
-		function hasDefaultClass(element) {
-			return (' ' + element.className + ' ').indexOf(' bng-selector-mhc ') > -1;
-		}
+		mainDiv.handleCloseSelector = closeFilter;
 
 		ctrl.showFilter = false;
 		ctrl.term = '';
@@ -46,9 +50,6 @@
 		ctrl.toggleFilter = function($event) {
 			if (ctrl.disabled) {
 				return;
-			}
-			if ($event) {
-				$event.stopPropagation();
 			}
 			if (!ctrl.showFilter) {
 				openFilter();
@@ -160,7 +161,7 @@
 			}
 		};
 	};
-	bngSelectorController.$inject = ['$element', '$timeout', '$scope', '$rootScope', '$window'];
+	bngSelectorController.$inject = ['$element', '$timeout', '$scope'];
 
 	bngSelector.component('bngSelector', {
 		bindings: {
