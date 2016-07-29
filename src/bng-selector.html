@@ -1,31 +1,31 @@
-<div class="bng-selector" ng-class="{ 'disabled': $ctrl.disabled }">
-	<div class="bng-selector-selected" ng-click="$ctrl.toggleFilter($event)">
+<div class="bng-selector bng-selector-mhc" ng-class="{ 'disabled': $ctrl.disabled }">
+	<div class="bng-selector-mhc bng-selector-selected" ng-click="$ctrl.toggleFilter($event)">
 		{{$ctrl.selected[$ctrl.label]}}
-		<i class="fa fa-caret-down" ng-show="! $ctrl.showFilter"></i>
-		<i class="fa fa-caret-up" ng-show="$ctrl.showFilter"></i>
-		<i class="fa fa-times" ng-show="$ctrl.selected && !$ctrl.multi"
+		<i class="bng-selector-mhc fa fa-caret-down" ng-show="! $ctrl.showFilter"></i>
+		<i class="bng-selector-mhc fa fa-caret-up" ng-show="$ctrl.showFilter"></i>
+		<i class="bng-selector-mhc fa fa-times" ng-show="$ctrl.selected && !$ctrl.multi"
 		   ng-click="$ctrl.clear($event)"></i>
 	</div>
-	<div class="bng-selector-filter" ng-show="$ctrl.showFilter">
-		<div class="bng-selector-filter-area">
-			<input class="bng-selector-filter-input" type="text"
+	<div class="bng-selector-mhc bng-selector-filter" ng-show="$ctrl.showFilter">
+		<div class="bng-selector-mhc bng-selector-filter-area">
+			<input class="bng-selector-mhc bng-selector-filter-input" type="text"
 				   ng-change="$ctrl.suggest()"
 				   ng-model="$ctrl.term">
-			<ul>
-				<li ng-show="$ctrl.multi">
-					<button class="btn btn-sm btn-default"
+			<ul class="bng-selector-mhc">
+				<li class="bng-selector-mhc" ng-show="$ctrl.multi">
+					<button class="bng-selector-mhc btn btn-sm btn-default"
 							ng-click="$ctrl.selectAll()">
-						<i class="fa fa-check"></i> {{$ctrl.selectAllLabel}}
+						<i class="bng-selector-mhc fa fa-check"></i> {{$ctrl.selectAllLabel}}
 					</button>
-					<button class="btn btn-sm btn-default"
+					<button class="bng-selector-mhc btn btn-sm btn-default"
 							ng-click="$ctrl.clear()">
-						<i class="fa fa-times"></i> {{$ctrl.clearAllLabel}}
+						<i class="bng-selector-mhc fa fa-times"></i> {{$ctrl.clearAllLabel}}
 					</button>
 				</li>
 				<li ng-repeat="opt in $ctrl.filteredOptions"
-					ng-click="$ctrl.select(opt)" class="bng-selector-option">
+					ng-click="$ctrl.select(opt)" class="bng-selector-mhc bng-selector-option">
 					<input type="checkbox" ng-show="$ctrl.multi"
-						   ng-model="opt.selectedBng" />
+						   ng-model="opt.selectedBng" class="bng-selector-mhc" />
 					{{opt[$ctrl.label]}}
 				</li>
 			</ul>
