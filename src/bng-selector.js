@@ -2,34 +2,29 @@
 	var bngSelector = angular.module('bng-selector', []);
 	var ESC_KEY = 27;
 
-	var bngSelectorController = function($element, $timeout, $scope, $window) {
+	var bngSelectorController = function($element, $timeout, $scope, $rootScope, $window) {
 		var ctrl = this;
 		var componentElement = $element[0];
 		var mainDiv = componentElement.firstChild;
 		var inputFilter = componentElement.querySelector('.bng-selector-filter-input');
 
-		$window.addEventListener('click', function(event) {
-			if (!ctrl.showFilter) {
-				return;
-			}
-			if (!belongsToComponent(event.target)) {
+		$scope.$on('some-fucking-event', function(event, target) {
+			if (mainDiv != target && ctrl.showFilter) {
 				closeFilter();
 			}
 		});
 
-		function belongsToComponent(element) {
-			if (!hasDefaultClass(element)) {
-				return false;
-			}
-			var parent = element.parentNode;
+		$window.addEventListener('click', function(event) {
+			var parent = event.target;
 			while (hasDefaultClass(parent)) {
 				if (parent == mainDiv) {
-					return true;
+					$rootScope.$broadcast('some-fucking-event', mainDiv);
+					return;
 				}
 				parent = parent.parentElement;
 			}
-			return false;
-		}
+			$rootScope.$broadcast('some-fucking-event', parent);
+		});
 
 		function hasDefaultClass(element) {
 			return (' ' + element.className + ' ').indexOf(' bng-selector-mhc ') > -1;
@@ -165,7 +160,7 @@
 			}
 		};
 	};
-	bngSelectorController.$inject = ['$element', '$timeout', '$scope', '$window'];
+	bngSelectorController.$inject = ['$element', '$timeout', '$scope', '$rootScope', '$window'];
 
 	bngSelector.component('bngSelector', {
 		bindings: {
