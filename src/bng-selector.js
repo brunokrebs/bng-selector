@@ -169,6 +169,8 @@
 			onUnselect: '&',
 			options: '<',
 			selected: '<',
+			showInputFilter: '<',
+			emptyLabel: '@',
 			multi: '<',
 			selectAllLabel: '@',
 			clearAllLabel: '@',

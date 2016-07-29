@@ -1,16 +1,17 @@
 <div class="bng-selector bng-selector-mhc" ng-class="{ 'disabled': $ctrl.disabled }">
 	<div class="bng-selector-mhc bng-selector-selected" ng-click="$ctrl.toggleFilter($event)">
-		{{$ctrl.selected[$ctrl.label]}}
+		{{$ctrl.selected[$ctrl.label] || $ctrl.emptyLabel}}
 		<i class="bng-selector-mhc fa fa-caret-down" ng-show="! $ctrl.showFilter"></i>
 		<i class="bng-selector-mhc fa fa-caret-up" ng-show="$ctrl.showFilter"></i>
 		<i class="bng-selector-mhc fa fa-times" ng-show="$ctrl.selected && !$ctrl.multi"
 		   ng-click="$ctrl.clear($event)"></i>
 	</div>
 	<div class="bng-selector-mhc bng-selector-filter" ng-show="$ctrl.showFilter">
-		<div class="bng-selector-mhc bng-selector-filter-area">
+		<div class="bng-selector-mhc bng-selector-filter-area" ng-class="{ 'bng-selector-show-input': $ctrl.showInputFilter }">
 			<input class="bng-selector-mhc bng-selector-filter-input" type="text"
 				   ng-change="$ctrl.suggest()"
-				   ng-model="$ctrl.term">
+				   ng-model="$ctrl.term"
+				   ng-show="$ctrl.showInputFilter">
 			<ul class="bng-selector-mhc">
 				<li class="bng-selector-mhc" ng-show="$ctrl.multi">
 					<button class="bng-selector-mhc btn btn-sm btn-default"

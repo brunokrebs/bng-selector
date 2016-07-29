@@ -58,7 +58,7 @@
 	border-top: none;
 }
 
-.bng-selector-filter-area:after {
+.bng-selector-filter-area.bng-selector-show-input:after {
 	content: "\f002";
 	font-family: FontAwesome;
 	font-size: 13px;

@@ -26,8 +26,15 @@
 		<div class="col-xs-12" ng-controller="demoController as ctrl">
 			<h1>bng-selector - Angular selector component</h1>
 			<hr />
+			<h2>Simple selection: {{ctrl.simpleTitle}}</h2>
+			<bng-selector show-input-filter="false" empty-label="Choose an option" options="ctrl.options"
+						  on-select="ctrl.simpleOptionSelected(option)"
+						  on-unselect="ctrl.simpleOptionUnselected()"
+						  label="name" selected="ctrl.simpleOption">
+			</bng-selector>
+			<hr />
 			<h2>Simple selection with filter</h2>
-			<bng-selector options="ctrl.options"
+			<bng-selector show-input-filter="true" options="ctrl.options"
 						  on-select="ctrl.optionSelected(option)"
 						  on-unselect="ctrl.optionUnselected()"
 						  label="name" selected="ctrl.selected"
@@ -47,7 +54,7 @@
 			</p>
 			<hr />
 			<h2>Multi selection with filter</h2>
-			<bng-selector multi="true" options="ctrl.options"
+			<bng-selector show-input-filter="true" multi="true" options="ctrl.options"
 						  on-select="ctrl.multiSelectionEvent(option)"
 						  on-unselect="ctrl.clearMulti()"
 						  label="name" selected="ctrl.selectedItems">
@@ -94,6 +101,14 @@
 
 			ctrl.optionUnselected = function() {
 				ctrl.title = 'No one!';
+			};
+
+			ctrl.simpleOptionSelected = function(option) {
+				ctrl.simpleTitle = option.name;
+			};
+
+			ctrl.simpleOptionUnselected = function() {
+				ctrl.simpleTitle = '';
 			};
 
 			ctrl.multiSelectionEvent = function(selectedItems) {
