@@ -34,7 +34,7 @@
 
 		mainDiv.handleCloseSelector = closeFilter;
 
-		ctrl.showFilter = false;
+		ctrl.showOptions = false;
 		ctrl.term = '';
 		ctrl.filteredOptions = ctrl.options;
 		ctrl.selectedItems = [];
@@ -51,7 +51,7 @@
 			if (ctrl.disabled) {
 				return;
 			}
-			if (!ctrl.showFilter) {
+			if (!ctrl.showOptions) {
 				openFilter();
 				$timeout(function() {
 					inputFilter.focus();
@@ -78,7 +78,7 @@
 		
 		ctrl.select = function(option) {
 			if (!ctrl.multi) {
-				ctrl.showFilter = false;
+				ctrl.showOptions = false;
 				ctrl.selected = option;
 				ctrl.selected.label = option[ctrl.label];
 				ctrl.onSelect({option: option});
@@ -128,12 +128,12 @@
 
 		function openFilter() {
 			componentElement.addEventListener('keydown', handleKeyDown);
-			ctrl.showFilter = true;
+			ctrl.showOptions = true;
 		}
 
 		function closeFilter(avoidApply) {
 			componentElement.removeEventListener('keydown', handleKeyDown);
-			ctrl.showFilter = false;
+			ctrl.showOptions = false;
 			ctrl.term = '';
 			ctrl.filteredOptions = ctrl.options;
 			if (!avoidApply) {
@@ -169,7 +169,7 @@
 			onUnselect: '&',
 			options: '<',
 			selected: '<',
-			showInputFilter: '<',
+			showFilter: '<',
 			emptyLabel: '@',
 			multi: '<',
 			selectAllLabel: '@',
