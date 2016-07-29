@@ -13,7 +13,7 @@
 				   ng-model="$ctrl.term"
 				   ng-show="$ctrl.showFilter">
 			<ul class="bng-selector-mhc">
-				<li class="bng-selector-mhc" ng-show="$ctrl.multi">
+				<li class="bng-selector-mhc" ng-show="$ctrl.multi && $ctrl.showMultiControls">
 					<button class="bng-selector-mhc btn btn-sm btn-default"
 							ng-click="$ctrl.selectAll()">
 						<i class="bng-selector-mhc fa fa-check"></i> {{$ctrl.selectAllLabel}}

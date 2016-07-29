@@ -34,6 +34,10 @@
 
 		mainDiv.handleCloseSelector = closeFilter;
 
+		if (ctrl.multi && ctrl.showMultiControls == null) {
+			ctrl.showMultiControls = true;
+		}
+
 		ctrl.showOptions = false;
 		ctrl.term = '';
 		ctrl.filteredOptions = ctrl.options;
@@ -172,6 +176,7 @@
 			showFilter: '<',
 			emptyLabel: '@',
 			multi: '<',
+			showMultiControls: '<',
 			selectAllLabel: '@',
 			clearAllLabel: '@',
 			disabled: '<',
