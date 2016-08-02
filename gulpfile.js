@@ -16,6 +16,15 @@ gulp.task('pack-templates', function () {
 		.pipe(gulp.dest('./tmp/'));
 });
 
+gulp.task('develop', ['pack-templates'], function() {
+	return gulp.src([
+		'./src/bng-selector.js',
+		'./tmp/templates.js'
+	])
+		.pipe(concat('bng-selector.min.js'))
+		.pipe(gulp.dest('./demo'));
+});
+
 gulp.task('uglify', ['pack-templates'], function() {
 	return gulp.src([
 			'./src/bng-selector.js',
@@ -37,8 +46,8 @@ gulp.task('clean-css', ['uglify'], function() {
 		.pipe(gulp.dest('./demo'));
 });
 
-gulp.task('watch', ['clean-css'], function() {
-	gulp.watch(['./src/**/*'], ['uglify']);
+gulp.task('watch', ['develop'], function() {
+	gulp.watch(['./src/**/*'], ['develop']);
 });
 
 gulp.task('webserver', ['watch'], function() {

@@ -27,6 +27,7 @@
 
 	var bngSelectorController = function($element, $timeout, $scope) {
 		var ctrl = this;
+		ctrl.uniqueSelecteProperty = 'selectedBng' + (new Date()).getTime();
 		var componentElement = $element[0];
 		var mainDiv = componentElement.firstChild;
 		bngSelector.components.push(mainDiv);
@@ -41,7 +42,24 @@
 		ctrl.showOptions = false;
 		ctrl.term = '';
 		ctrl.filteredOptions = ctrl.options;
-		ctrl.selectedItems = [];
+		ctrl.key = ctrl.key || ctrl.label;
+
+		function handlePreSelected() {
+			ctrl.selectedItems = [];
+			if (!ctrl.selected || !ctrl.selected.length) {
+				return;
+			}
+			for (var s = 0; s < ctrl.selected.length; s++) {
+				var selectedOption = ctrl.selected[s];
+				for (var o = 0; o < ctrl.options.length; o++) {
+					var currentOption = ctrl.options[o];
+					if (selectedOption[ctrl.key] == currentOption[ctrl.key]) {
+						currentOption[ctrl.uniqueSelecteProperty] = true;
+						ctrl.selectedItems.push(currentOption);
+					}
+				}
+			}
+		}
 
 		if (!ctrl.selectAllLabel) {
 			ctrl.selectAllLabel = 'Select all';
@@ -87,13 +105,13 @@
 				ctrl.selected.label = option[ctrl.label];
 				ctrl.onSelect({option: option});
 			} else {
-				delete option.selectedBng;
+				delete option[ctrl.uniqueSelecteProperty];
 				var indexOf = ctrl.selectedItems.indexOf(option);
 				if (indexOf >= 0) {
-					option.selectedBng = false;
+					option[ctrl.uniqueSelecteProperty] = false;
 					ctrl.selectedItems.splice(indexOf, 1);
 				} else {
-					option.selectedBng = true;
+					option[ctrl.uniqueSelecteProperty] = true;
 					ctrl.selectedItems.push(option);
 				}
 				ctrl.onSelect({option: ctrl.selectedItems});
@@ -106,7 +124,7 @@
 				var indexOf = ctrl.selectedItems.indexOf(item);
 				if (indexOf < 0) {
 					ctrl.selectedItems.push(item);
-					item.selectedBng = true;
+					item[ctrl.uniqueSelecteProperty] = true;
 				}
 			}
 			ctrl.onSelect({option: ctrl.selectedItems});
@@ -122,7 +140,7 @@
 				closeFilter(true);
 			}
 			for (var i = 0; i < ctrl.options.length; i++) {
-				delete ctrl.options[i].selectedBng;
+				delete ctrl.options[i][ctrl.uniqueSelecteProperty];
 			}
 			ctrl.onUnselect();
 			if ($event) {
@@ -156,12 +174,14 @@
 				if (!changedObject.options.isFirstChange()) {
 					ctrl.filteredOptions = changedObject.options.currentValue;
 				}
+				handlePreSelected();
 			}
 			if (!ctrl.multi && changedObject.selected && changedObject.selected.currentValue) {
 				if (!changedObject.selected.isFirstChange()) {
 					ctrl.selected = changedObject.selected.currentValue;
 					ctrl.selected.label = changedObject.selected.currentValue[ctrl.label];
 				}
+				handlePreSelected();
 			}
 		};
 	};
@@ -180,6 +200,7 @@
 			selectAllLabel: '@',
 			clearAllLabel: '@',
 			disabled: '<',
+			key: '@',
 			label: '@'
 		},
 		templateUrl: 'bng-selector.html',

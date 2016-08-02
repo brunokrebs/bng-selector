@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="demoApp">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,18 +21,21 @@
 </head>
 <body>
 
-<div class="container" ng-app="demoApp">
+<div class="container" ng-controller="demoController as ctrl">
 	<div class="row">
-		<div class="col-xs-12" ng-controller="demoController as ctrl">
+		<div class="col-xs-12">
 			<h1>bng-selector - Angular selector component</h1>
 			<hr />
+		</div>
+		<div class="col-xs-12 col-sm-6">
 			<h2>Simple selection: {{ctrl.simpleTitle}}</h2>
 			<bng-selector show-filter="false" empty-label="Choose an option" options="ctrl.options"
 						  on-select="ctrl.simpleOptionSelected(option)"
 						  on-unselect="ctrl.simpleOptionUnselected()"
 						  label="name" selected="ctrl.simpleOption">
 			</bng-selector>
-			<hr />
+		</div>
+		<div class="col-xs-12 col-sm-6">
 			<h2>Simple selection with filter</h2>
 			<bng-selector show-filter="true" options="ctrl.options"
 						  on-select="ctrl.optionSelected(option)"
@@ -52,16 +55,29 @@
 				<button class="btn btn-primary btn-sm" ng-click="ctrl.changeSelected()">Change selected</button>
 				<button class="btn btn-primary btn-sm" ng-click="ctrl.disabled = !ctrl.disabled">Toggle disabled</button>
 			</p>
-			<hr />
+		</div>
+		<div class="col-xs-12 col-sm-6">
 			<h2>Multi selection with filter</h2>
 			<bng-selector show-filter="true" multi="true" options="ctrl.options"
 						  on-select="ctrl.multiSelectionEvent(option)"
 						  on-unselect="ctrl.clearMulti()"
-						  label="name" selected="ctrl.selectedItems">
+						  label="name">
 			</bng-selector>
 			<h3>Selected items:</h3>
 			<ul>
 				<li ng-repeat="item in ctrl.selectedItems">{{item.name}}</li>
+			</ul>
+		</div>
+		<div class="col-xs-12 col-sm-6">
+			<h2>Multi selection with filter and pre-selection</h2>
+			<bng-selector show-filter="true" multi="true" options="ctrl.options"
+						  on-select="ctrl.multiPreSelectionEvent(option)"
+						  on-unselect="ctrl.clearMultiPre()"
+						  label="name" key="id" selected="ctrl.preSelectedItems">
+			</bng-selector>
+			<h3>Selected items:</h3>
+			<ul>
+				<li ng-repeat="item in ctrl.preSelectedItems">{{item.name}}</li>
 			</ul>
 		</div>
 	</div>
@@ -78,15 +94,15 @@
 
 			$timeout(function() {
 				ctrl.options = [
-					{name: 'Bruno'}, {name: 'Carolina'}, {name: 'Danilo'}, {name: 'Eduarda'},
-					{name: 'Fernando'}, {name: 'Gisele'}, {name: 'Hilton'}, {name: 'Inayara'},
-					{name: 'João'}, {name: 'Kimberly'}, {name: 'Leandro'}, {name: 'Maria Helena'}
+					{id: 1, name: 'Bruno'}, {id: 2, name: 'Carolina'}, {id: 3, name: 'Danilo'}, {id: 4, name: 'Eduarda'},
+					{id: 5, name: 'Fernando'}, {id: 6, name: 'Gisele'}, {id: 7, name: 'Hilton'}, {id: 8, name: 'Inayara'},
+					{id: 9, name: 'João'}, {id: 10, name: 'Kimberly'}, {id: 11, name: 'Leandro'}, {id: 12, name: 'Maria Helena'}
 				];
 			}, 1000);
 
 			ctrl.changeOptions = function() {
 				ctrl.options = [
-					{name: 'Natália'}, {name: 'Otávio'}, {name: 'Paula'}, {name: 'Querubim'}
+					{id: 13, name: 'Natália'}, {id: 14, name: 'Otávio'}, {id: 15, name: 'Paula'}, {id: 16, name: 'Querubim'}
 				];
 			};
 
@@ -115,14 +131,27 @@
 				ctrl.selectedItems = selectedItems;
 			};
 
-			ctrl.clearMulti= function() {
+			ctrl.multiPreSelectionEvent = function(preSelectedItems) {
+				ctrl.preSelectedItems = preSelectedItems;
+			};
+
+			ctrl.clearMulti = function() {
 				ctrl.selectedItems = [];
+			};
+
+			ctrl.clearMultiPre = function() {
+				ctrl.preSelectedItems = [];
 			};
 
 			ctrl.selectedItems = [];
 
+			ctrl.preSelectedItems = [
+				{id: 3, name: 'Danilo'}, {id: 6, name: 'Gisele'}, {id: 7, name: 'Hilton'}
+			];
+
 			ctrl.options = [
-				{name: 'Bruno'}, {name: 'Carolina'}, {name: 'Danilo'}, {name: 'Eduarda'}
+				{id: 1, name: 'Bruno'}, {id: 4, name: 'Eduarda'},
+				{id: 9, name: 'João'}, {id: 10, name: 'Kimberly'}
 			];
 
 			ctrl.selected = {name: 'Bruno'};
